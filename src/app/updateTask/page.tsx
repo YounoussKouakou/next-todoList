@@ -34,8 +34,8 @@ export default function UpdateTask() {
   };
 
   return (
-    <form onSubmit={handleUpdate} className="p-6 space-y-4">
-      <h2 className="text-xl font-bold">Modifier la tâche #{taskId}</h2>
+    <form onSubmit={handleUpdate} className="flex flex-col mx-auto gap-2 max-w-lg">
+      <h2 className="text-3xl font-bold">Modifier la tâche{taskId}</h2>
       <input
         className="border p-2 w-full"
         value={title}
@@ -48,7 +48,7 @@ export default function UpdateTask() {
         onChange={e => setStatus(e.target.value)}
         placeholder="Status"
       />
-      <button className="bg-yellow-500 text-white px-4 py-2 rounded" type="submit">
+      <button className="rounded-lg p-3 bg-green-500/20 border-2 border-solid border-green-500/20 transition-colors hover:bg-green-500/40 font-medium text-base leading-none flex flex-row items-center justify-center gap-2" type="submit">
         Mettre à jour
       </button>
     </form>

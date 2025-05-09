@@ -1,6 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { FaRegEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
 
 type Task = {
   id: number;
@@ -66,18 +68,20 @@ export default function TodoTask() {
                     {task.status}
                   </span>
                 </td>
-                <td className="py-3 px-6 text-left space-x-2">
+                <td className="py-3 px-6 text-left space-x-2 flex">
                   <Link
                     href={`/updateTask?id=${task.id}`}
-                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 flex items-center"
+                    title="Éditer"
                   >
-                    Éditer
+                    <FaRegEdit />
                   </Link>
                   <button
                     onClick={() => handleDelete(task.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 flex items-center"
+                    title="Supprimer"
                   >
-                    Supprimer
+                    <MdDelete />
                   </button>
                 </td>
               </tr>
