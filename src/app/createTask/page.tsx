@@ -35,8 +35,9 @@ export default function CreateTask() {
           onChange={(e) => setTitle(e.target.value)}
           className="p-2 border rounded font-semibold text-lg"
           required
+          
         />
-
+      
         <button
           type="submit"
           className="rounded-lg p-3 bg-green-500/20 border-2 border-solid border-green-500/20 transition-colors hover:bg-green-500/40 font-medium text-base leading-none flex flex-row items-center justify-center gap-2"

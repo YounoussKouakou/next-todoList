@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+// next.config.js
+const nextConfig = {
+  experimental: {
+    turbo: false,
+  },
+}
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+module.exports = nextConfig

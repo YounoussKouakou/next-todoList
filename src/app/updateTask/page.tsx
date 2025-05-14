@@ -42,12 +42,6 @@ export default function UpdateTask() {
         onChange={e => setTitle(e.target.value)}
         placeholder="tâche"
       />
-      <textarea
-        className="border p-2 w-full"
-        value={Status}
-        onChange={e => setStatus(e.target.value)}
-        placeholder="Status"
-      />
       <button className="rounded-lg p-3 bg-green-500/20 border-2 border-solid border-green-500/20 transition-colors hover:bg-green-500/40 font-medium text-base leading-none flex flex-row items-center justify-center gap-2" type="submit">
         Mettre à jour
       </button>
