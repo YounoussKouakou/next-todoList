@@ -1,4 +1,7 @@
 'use client';
+import { getTodos } from '@/Gateways/todo';
+import { ITodo } from '@/Interfaces/todo';
+import { Span } from 'next/dist/trace';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
@@ -12,35 +15,16 @@ type Task = {
 };
 
 export default function TodoTask() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<ITodo[]>([]);
 
   useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    const tasksWithStatus = storedTasks.map((task: any) => ({
-      ...task,
-      status: task.status || 'En cours',
-    }));
-    setTasks(tasksWithStatus);
-  }, []);
-
-  const saveTasks = (updatedTasks: Task[]) => {
-    setTasks(updatedTasks);
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-  };
-
-  const handleDelete = (id: number) => {
-    const confirmDelete = window.confirm('Es-tu sûr de vouloir supprimer cette tâche ?');
-    if (!confirmDelete) return;
-
-    const updatedTasks = tasks.filter(task => task.id !== id);
-    saveTasks(updatedTasks);
-    alert('Tâche supprimée avec succès.');
-  };
-
+    setTasks(getTodos())
+  }, [])
+  
   return (
-    <div className="p-6">
+    <div className="grid justify-center items-center min-h-screen mt-5">
+      <div className='flex flex-col w-4xl'>
       <h1 className="text-3xl font-bold text-center mb-6">Liste des Tâches</h1>
-
       <div className="mb-4 text-right">
         <Link
           href="/createTask"
@@ -61,28 +45,32 @@ export default function TodoTask() {
           </thead>
           <tbody>
             {tasks.map(task => (
-              <tr key={task.id} className="border-t">
-                <td className="py-3 px-6 text-left">{task.title}</td>
+              <tr key={task.id} className={`font-serif ${task.completed ? "bg-green-50 hover:bg-green-100 ": "hover:bg-gray-300/90"}`}>
+                <td className={`font-serif ${task.completed ? "line-through font-serif hover:bg-green-100 ": "hover:bg-gray-300/90"}`}>{task.title}</td>
                 <td className="py-3 px-6 text-left">
-                  <span className={task.status === 'Terminée' ? 'text-green-600 font-semibold' : 'text-yellow-600'}>
-                    {task.status}
+                  <span className={task.completed ? ' font-serif' : 'text-yellow-600'}>
+                    {task.completed ? (
+                      <span>Terminée</span>
+                    ) : (
+                      <span>En cours ...</span>
+                    )}
                   </span>
                 </td>
                 <td className="py-3 px-6 text-left space-x-2 flex">
                   <Link
-                    href={`/updateTask?id=${task.id}`}
+                    href={`/updateTask/${task.id}`}
                     className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 flex items-center"
                     title="Éditer"
                   >
                     <FaRegEdit />
                   </Link>
-                  <button
-                    onClick={() => handleDelete(task.id)}
+                  <Link
+                    href={`/deleteTask/${task.id}`}
                     className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 flex items-center"
                     title="Supprimer"
                   >
                     <MdDelete />
-                  </button>
+                  </Link>
                 </td>
               </tr>
             ))}
@@ -94,6 +82,7 @@ export default function TodoTask() {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import TodoList from "@/Components/TodoList";
-import CreateTask from "./createTask/page";
+
+import TodoTask from "./task/page";
 
 
 export default function HomePage() {
   return (
     <div>
-      <CreateTask />
+      <TodoTask />
     </div>
   );
 }

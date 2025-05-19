@@ -1,7 +1,5 @@
 import { ITodo } from "@/Interfaces/todo";
 
-
-
 const STORAGE_KEY = "todos";
 
 function getStoredTodos(): ITodo[] {
@@ -44,3 +42,22 @@ export function deleteTodo(id: number): void {
   const updatedTodos = todos.filter((todo) => todo.id !== id);
   saveTodos(updatedTodos);
 }
+
+export function getTodoById(id: number): ITodo | undefined {
+  const todos = getStoredTodos();
+  return todos.find((todo) => todo.id === id);
+}
+
+export const updateTaskById = (
+  id: number,
+  newtitle: string,
+  completed: boolean
+): ITodo | null => {
+  const tasks = getTodos();
+  const updatedTasks = tasks.map((todo) =>
+    todo.id == id ? { ...todo, title: newtitle, completed } : todo
+  );
+  const updatedTask = updatedTasks.find((todo) => todo.id === id) || null;
+  saveTodos(updatedTasks);
+  return updatedTask;
+};
